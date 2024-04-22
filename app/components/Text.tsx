@@ -18,6 +18,10 @@ export interface TextProps extends RNTextProps {
    */
   text?: string
   /**
+   * Additional text like a dynamic name to put after tx
+   */
+  txt?: string
+  /**
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
@@ -52,7 +56,7 @@ export interface TextProps extends RNTextProps {
  * @returns {JSX.Element} The rendered `Text` component.
  */
 export function Text(props: TextProps) {
-  const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
+  const { weight, size, tx, txt, txOptions, text, children, style: $styleOverride, ...rest } = props
 
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
@@ -68,7 +72,7 @@ export function Text(props: TextProps) {
 
   return (
     <RNText {...rest} style={$styles}>
-      {content}
+      {content} {txt || ""}
     </RNText>
   )
 }

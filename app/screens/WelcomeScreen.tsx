@@ -1,83 +1,109 @@
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import {
-  Text,
-} from "app/components"
+import { Image, ImageStyle, TextStyle, View, ViewStyle, ScrollView } from "react-native"
+import { Text } from "app/components"
 import { isRTL } from "../i18n"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 
-const welcomeLogo = require("../../assets/images/logo.png")
-const welcomeFace = require("../../assets/images/welcome-face.png")
-
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
-) {
-
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen() {
+  const $insets = useSafeAreaInsetsStyle(["bottom", "top"])
+  console.log({ insets: $insets })
 
   return (
-    <View style={$container}>
-      <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text
-          testID="welcome-heading"
-          style={$welcomeHeading}
-          tx="welcomeScreen.readyForLaunch"
-          preset="heading"
-        />
-        <Text tx="welcomeScreen.exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
+    <ScrollView contentContainerStyle={[$container, $insets]}>
+      <Text style={$welcomeHeading} tx="homeScreen.hello" txt="Nilou!" preset="heading" />
+
+      <View>
+        <ScrollView
+          contentContainerStyle={$topContainer}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+          {Array.from({ length: 7 }).map((_, i) => (
+            <View
+              style={{
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: colors.background,
+                  width: 60,
+                  height: 80,
+                  borderRadius: 10,
+                }}
+                key={i}
+              />
+              <Text text="🤔" />
+            </View>
+          ))}
+        </ScrollView>
       </View>
 
-      <View style={[$bottomContainer, $bottomContainerInsets]}>
-        <Text tx="welcomeScreen.postscript" size="md" />
+      <View style={{ marginTop: spacing.md }}>
+        <Text tx="homeScreen.check_in" preset="subheading" />
+        <View>
+          <ScrollView
+            contentContainerStyle={$middleContainer}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {Array.from({ length: 3 }).map((_, i) => (
+              <View
+                style={{
+                  backgroundColor: colors.background,
+                  width: 200,
+                  height: 300,
+                  borderRadius: 10,
+                }}
+                key={i}
+              />
+            ))}
+          </ScrollView>
+        </View>
       </View>
-    </View>
+
+      <View style={{ marginTop: spacing.md }}>
+        <Text tx="homeScreen.today" preset="subheading" />
+        <View style={$bottomContainer}>
+          {Array.from({ length: 7 }).map((_, i) => (
+            <View
+              style={{ backgroundColor: colors.background, padding: spacing.sm, borderRadius: 10 }}
+            >
+              <Text text="Avoid sweets" />
+            </View>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
   )
 })
 
 const $container: ViewStyle = {
   flex: 1,
-  backgroundColor: colors.background,
+  backgroundColor: colors.palette.primary100,
+  paddingHorizontal: spacing.lg,
 }
 
 const $topContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
-  justifyContent: "center",
-  paddingHorizontal: spacing.lg,
+  marginVertical: spacing.md,
+  gap: 10,
+}
+
+const $middleContainer: ViewStyle = {
+  marginVertical: spacing.md,
+  gap: 20,
 }
 
 const $bottomContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 0,
-  flexBasis: "43%",
-  backgroundColor: colors.palette.neutral100,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  paddingHorizontal: spacing.lg,
-  justifyContent: "space-around",
-}
-const $welcomeLogo: ImageStyle = {
-  height: 88,
-  width: "100%",
-  marginBottom: spacing.xxl,
+  marginVertical: spacing.md,
+  gap: 10,
 }
 
-const $welcomeFace: ImageStyle = {
-  height: 169,
-  width: 269,
-  position: "absolute",
-  bottom: -47,
-  right: -80,
-  transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
-
-const $welcomeHeading: TextStyle = {
-  marginBottom: spacing.md,
-}
+const $welcomeHeading: TextStyle = {}

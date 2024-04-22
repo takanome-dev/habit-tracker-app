@@ -1,10 +1,10 @@
 {
-  "name": "PizzaApp",
-  "displayName": "PizzaApp",
+  "name": "Habit Tracker",
+  "displayName": "Habit Tracker",
   "expo": {
-    "name": "PizzaApp",
-    "slug": "PizzaApp",
-    "scheme": "pizzaapp",
+    "name": "Habit Tracker",
+    "slug": "habittracker",
+    "scheme": "habittracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon-all.png",
@@ -17,12 +17,10 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
-      "package": "com.pizzaapp",
+      "package": "com.habittracker",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
@@ -36,7 +34,7 @@
     "ios": {
       "icon": "./assets/images/app-icon-ios.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.pizzaapp",
+      "bundleIdentifier": "com.habittracker",
       "splash": {
         "image": "./assets/images/splash-logo-ios-mobile.png",
         "tabletImage": "./assets/images/splash-logo-ios-tablet.png",
