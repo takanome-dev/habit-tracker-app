@@ -10,6 +10,11 @@ const en = {
     readyForLaunch: "Your app, almost ready for launch!",
     exciting: "(ohh, this is exciting!)",
   },
+  homeScreen: {
+    hello: "Howdy,",
+    check_in: "Daily check-in",
+    today: "Today",
+  },
   errorScreen: {
     title: "Something went wrong!",
     friendlySubtitle:
