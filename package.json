@@ -68,7 +68,7 @@
     "@babel/plugin-transform-template-literals": "^7.0.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@types/i18n-js": "3.8.2",
+    "@types/i18n-js": "3.8.9",
     "@types/jest": "^29.2.1",
     "@types/react": "~18.2.14",
     "@types/react-test-renderer": "^18.0.0",
