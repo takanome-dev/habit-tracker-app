@@ -7925,7 +7925,7 @@ reactotron-core-client@2.9.2:
   dependencies:
     reactotron-core-contract "0.2.3"
 
-reactotron-core-client@^2.8.13:
+reactotron-core-client@2.9.3, reactotron-core-client@^2.8.13:
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.9.3.tgz#5694ad2be95e40cfcaf792a7f3fcab14f8247481"
   integrity sha512-Z+PdYPi2ZsMyibH4251R2QpnIVrpgRoIFJYjeDF7LyomizkrOAugZDnTUNtUhVAqDb0eEWi4qaxUeEfnvZsn4w==
@@ -7945,11 +7945,11 @@ reactotron-mst@^3.1.7:
     ramda "^0.28.0"
 
 reactotron-react-js@^3.3.11:
-  version "3.3.13"
-  resolved "https://registry.yarnpkg.com/reactotron-react-js/-/reactotron-react-js-3.3.13.tgz#03537c391c32c3d043004ee9a0067a37878447ba"
-  integrity sha512-ExEypGaDbXrMbwVPK3ggqlUw6sFNeaa5UDLrAoFA/NXyYZzfkpI7qlKNgZCfEx+JQ4sb3nZ0BaRxw9Lkg00KWw==
+  version "3.3.14"
+  resolved "https://registry.yarnpkg.com/reactotron-react-js/-/reactotron-react-js-3.3.14.tgz#0884a8ae7ac166d57a4939e0a4fd77cef71cddf2"
+  integrity sha512-rv0HNXiDQy1DTN8DH6Uh0uWsyB3NK2Jfb+NcPPe+1YmeNg+lONH8xaNGiMRrkV20z5aviljOARM3WAh3YI8sZQ==
   dependencies:
-    reactotron-core-client "2.9.2"
+    reactotron-core-client "2.9.3"
     stacktrace-js "2.0.1"
 
 reactotron-react-native@^5.0.5:
