@@ -25,6 +25,10 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
    */
   status?: "error" | "disabled"
   /**
+   * Indicates a required input
+   */
+  required?: boolean
+  /**
    * The label text to display if not using `labelTx`.
    */
   label?: TextProps["text"]
@@ -122,6 +126,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     style: $inputStyleOverride,
     containerStyle: $containerStyleOverride,
     inputWrapperStyle: $inputWrapperStyleOverride,
+    required = false,
     ...TextInputProps
   } = props
   const input = useRef<TextInput>(null)
@@ -178,14 +183,17 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       accessibilityState={{ disabled }}
     >
       {!!(label || labelTx) && (
-        <Text
-          preset="formLabel"
-          text={label}
-          tx={labelTx}
-          txOptions={labelTxOptions}
-          {...LabelTextProps}
-          style={$labelStyles}
-        />
+        <View style={$labelContainerStyle}>
+          <Text
+            preset="formLabel"
+            text={label}
+            tx={labelTx}
+            txOptions={labelTxOptions}
+            {...LabelTextProps}
+            style={$labelStyles}
+          />
+          {required && <Text text="*" style={$labelRequiredText} />}
+        </View>
       )}
 
       <View style={$inputWrapperStyles}>
@@ -235,6 +243,12 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
 const $labelStyle: TextStyle = {
   marginBottom: spacing.xs,
+}
+
+const $labelContainerStyle: ViewStyle = { flexDirection: "row", gap: 2 }
+
+const $labelRequiredText: TextStyle = {
+  color: colors.error,
 }
 
 const $inputWrapperStyle: ViewStyle = {

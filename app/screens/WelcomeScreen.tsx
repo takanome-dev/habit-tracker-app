@@ -89,7 +89,9 @@ const DayCard = ({ day, date, progress }: DayCardProps) => (
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen() {
+export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen({
+  navigation,
+}) {
   return (
     <Screen preset="scroll" safeAreaEdges={["top", "bottom"]} contentContainerStyle={$container}>
       <View style={$headerContainer}>
@@ -98,7 +100,12 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
           <Text text="Today" size="xl" weight="bold" />
         </View>
         <View style={$headerBtn}>
-          <MaterialCommunityIcons name="plus" color={colors.palette.neutral100} size={28} />
+          <MaterialCommunityIcons
+            name="plus"
+            color={colors.palette.neutral100}
+            size={28}
+            onPress={() => navigation.navigate("CreateHabit")}
+          />
         </View>
       </View>
 
