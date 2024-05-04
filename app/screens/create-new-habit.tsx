@@ -9,8 +9,11 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet"
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
+// import DatePicker from "react-native-date-picker"
+import DateTimePicker from "@react-native-community/datetimepicker"
 
-import { Text, Screen, Icon, Button, TextField } from "app/components"
+import { Text, Screen, Icon, Button, TextField, Toggle } from "app/components"
 import layout from "app/utils/layout"
 
 import { AppStackScreenProps } from "../navigators"
@@ -25,6 +28,7 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
     const [open, setOpen] = React.useState(false)
     const [selectedEmoji, setSelectedEmoji] = React.useState("📚")
     const [colorPicked, setColorPicked] = React.useState("#ff0000")
+    const [habitTime, setHabitTime] = React.useState(new Date())
 
     const bottomSheetModalRef = React.useRef<BottomSheetModal>(null)
 
@@ -81,7 +85,7 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
             <TextField label="Habit Name" placeholder="Go to the GYM" required />
             <TextField label="Description" placeholder="Extra details" />
           </View>
-          <View style={{ gap: 8 }}>
+          <View style={$gap}>
             <View style={$frequencyContainer}>
               <Text preset="formLabel" text="Frequency" style={$labelStyle} />
               <Text text="*" style={$labelRequired} />
@@ -94,18 +98,39 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
               ))}
             </View>
           </View>
-          <View style={{ gap: 8 }}>
+          <View style={$gap}>
             <View style={$frequencyContainer}>
               <Text preset="formLabel" text="Habit time" style={$labelStyle} />
               <Text text="*" style={$labelRequired} />
             </View>
-            <View style={$daysContainer}>
-              {days.map((d, idx) => (
-                <View key={`day-${d}-${idx}`} style={$dayContainerStyle}>
-                  <Text text={d} style={$dayStyle} size="md" />
-                </View>
-              ))}
+            <DateTimePicker
+              testID="dateTimePicker"
+              style={$dateTimePicker}
+              value={habitTime}
+              mode="time"
+              is24Hour={false}
+              locale="en-US"
+              accentColor={colors.palette.neutral100}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              onChange={(_, selectedDate) => setHabitTime(new Date(selectedDate!))}
+            />
+          </View>
+          <View style={$gap}>
+            <View style={$remindersContainer}>
+              <Text preset="formLabel" text="Reminders" style={$labelStyle} />
+              <Toggle variant="switch" value={true} />
             </View>
+            <DateTimePicker
+              testID="dateTimePicker"
+              style={$dateTimePicker}
+              value={habitTime}
+              mode="time"
+              is24Hour={false}
+              locale="en-US"
+              accentColor={colors.palette.neutral100}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              onChange={(_, selectedDate) => setHabitTime(new Date(selectedDate!))}
+            />
           </View>
           <Button style={$btn} textStyle={{ color: colors.palette.neutral100 }}>
             Create habit
@@ -190,4 +215,17 @@ const $dayContainerStyle: ViewStyle = {
 const $dayStyle: TextStyle = {
   lineHeight: 0,
   textAlign: "center",
+}
+
+const $gap: ViewStyle = { gap: 8 }
+
+const $dateTimePicker: ViewStyle = {
+  alignSelf: "flex-start",
+  // backgroundColor: colors.palette.neutral100,
+}
+
+const $remindersContainer: ViewStyle = {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
 }
