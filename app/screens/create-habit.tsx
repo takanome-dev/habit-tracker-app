@@ -79,7 +79,11 @@ export const CreateHabitScreen: FC<CreateHabitScreenProps> = observer(function C
           <Text text="Couldn’t find anything? Create a new habit" preset="formLabel" size="md" />
         </View>
       </View>
-      <Button style={$btn} textStyle={{ color: colors.palette.neutral100 }}>
+      <Button
+        style={$btn}
+        textStyle={{ color: colors.palette.neutral100 }}
+        onPress={() => navigation.navigate("Welcome")}
+      >
         Done
       </Button>
     </Screen>

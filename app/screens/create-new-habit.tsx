@@ -9,8 +9,6 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet"
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
-// import DatePicker from "react-native-date-picker"
 import DateTimePicker from "@react-native-community/datetimepicker"
 
 import { Text, Screen, Icon, Button, TextField, Toggle } from "app/components"
@@ -19,27 +17,98 @@ import layout from "app/utils/layout"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 
-const days = ["S", "M", "T", "W", "T", "F", "S"]
+const days = [
+  {
+    day: "Sunday",
+    abbr: "S",
+  },
+  {
+    day: "Monday",
+    abbr: "M",
+  },
+  {
+    day: "Tuesday",
+    abbr: "T",
+  },
+  {
+    day: "Wednesday",
+    abbr: "W",
+  },
+  {
+    day: "Thursday",
+    abbr: "T",
+  },
+  {
+    day: "Friday",
+    abbr: "F",
+  },
+  {
+    day: "Saturday",
+    abbr: "S",
+  },
+]
+
+const reminders = [
+  {
+    id: 1,
+    name: "At the habit time",
+  },
+  {
+    id: 2,
+    name: "5 minutes before",
+  },
+  {
+    id: 3,
+    name: "10 minutes before",
+  },
+  {
+    id: 4,
+    name: "15 minutes before",
+  },
+  {
+    id: 5,
+    name: "30 minutes before",
+  },
+]
 
 interface CreateNewHabitScreenProps extends AppStackScreenProps<"CreateNewHabit"> {}
 
 export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
   function CreateNewHabitScreen({ navigation }) {
     const [open, setOpen] = React.useState(false)
+    const [reminder, setReminder] = React.useState("")
     const [selectedEmoji, setSelectedEmoji] = React.useState("📚")
     const [colorPicked, setColorPicked] = React.useState("#ff0000")
     const [habitTime, setHabitTime] = React.useState(new Date())
+    const [frequency, setFrequency] = React.useState<(typeof days)[0][]>([])
+    console.log({ frequency })
 
-    const bottomSheetModalRef = React.useRef<BottomSheetModal>(null)
+    const bottomSheetColorRef = React.useRef<BottomSheetModal>(null)
+    const bottomSheetReminderRef = React.useRef<BottomSheetModal>(null)
 
-    const handlePresentModalPress = React.useCallback(() => {
-      bottomSheetModalRef.current?.present()
+    const handleOpenColorSheet = React.useCallback(() => {
+      bottomSheetColorRef.current?.present()
+    }, [])
+    const handleOpenReminderSheet = React.useCallback(() => {
+      bottomSheetReminderRef.current?.present()
     }, [])
 
     const renderBackdrop = React.useCallback(
       (props: any) => <BottomSheetBackdrop {...props} disappearsOnIndex={0} appearsOnIndex={1} />,
       [],
     )
+
+    const handleSelectFrequency = (day: (typeof days)[0]) => {
+      let newFrequency = [...frequency]
+      const found = newFrequency.findIndex((f) => f.day === day.day)
+      if (found === -1) {
+        newFrequency.push(day)
+      } else {
+        newFrequency = newFrequency.filter((f) => f.day !== day.day)
+      }
+
+      setFrequency(newFrequency)
+    }
 
     return (
       <Screen preset="scroll" safeAreaEdges={["top", "bottom"]} contentContainerStyle={$container}>
@@ -58,12 +127,12 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
               open={open}
               onClose={() => setOpen(!open)}
             />
-            <TouchableOpacity style={$pillContainer} onPress={handlePresentModalPress}>
+            <TouchableOpacity style={$pillContainer} onPress={handleOpenColorSheet}>
               <View style={[$pickedColor, { backgroundColor: colorPicked }]} />
               <Text text="color" preset="formLabel" size="md" />
             </TouchableOpacity>
             <BottomSheetModal
-              ref={bottomSheetModalRef}
+              ref={bottomSheetColorRef}
               snapPoints={[200, "50%"]}
               backdropComponent={renderBackdrop}
             >
@@ -92,9 +161,31 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
             </View>
             <View style={$daysContainer}>
               {days.map((d, idx) => (
-                <View key={`day-${d}-${idx}`} style={$dayContainerStyle}>
-                  <Text text={d} style={$dayStyle} size="md" />
-                </View>
+                <TouchableOpacity
+                  key={`day-${d.day}-${idx}`}
+                  style={[
+                    $dayContainerStyle,
+                    {
+                      backgroundColor: frequency.find((f) => f.day === d.day)
+                        ? colors.palette.primary600
+                        : colors.palette.neutral100,
+                    },
+                  ]}
+                  onPress={() => handleSelectFrequency(d)}
+                >
+                  <Text
+                    text={d.abbr}
+                    style={[
+                      $dayStyle,
+                      {
+                        color: frequency.find((f) => f.day === d.day)
+                          ? colors.palette.neutral100
+                          : colors.text,
+                      },
+                    ]}
+                    size="md"
+                  />
+                </TouchableOpacity>
               ))}
             </View>
           </View>
@@ -118,21 +209,51 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
           <View style={$gap}>
             <View style={$remindersContainer}>
               <Text preset="formLabel" text="Reminders" style={$labelStyle} />
-              <Toggle variant="switch" value={true} />
+              <Toggle
+                variant="switch"
+                value={!!reminder}
+                onValueChange={() => setReminder(reminder ? "" : "30 minutes before")}
+                inputInnerStyle={{
+                  backgroundColor: reminder ? colors.success : colors.palette.neutral100,
+                }}
+                inputOuterStyle={{
+                  backgroundColor: colors.palette.neutral400,
+                }}
+              />
             </View>
-            <DateTimePicker
-              testID="dateTimePicker"
-              style={$dateTimePicker}
-              value={habitTime}
-              mode="time"
-              is24Hour={false}
-              locale="en-US"
-              accentColor={colors.palette.neutral100}
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              onChange={(_, selectedDate) => setHabitTime(new Date(selectedDate!))}
-            />
+            {reminder && (
+              <TouchableOpacity style={$reminder} onPress={() => handleOpenReminderSheet()}>
+                <Text text={reminder} size="md" />
+                <Icon icon="caretRight" />
+              </TouchableOpacity>
+            )}
+            <BottomSheetModal
+              ref={bottomSheetReminderRef}
+              snapPoints={[200, "50%"]}
+              backdropComponent={renderBackdrop}
+            >
+              <BottomSheetView style={$reminderBottomSheet}>
+                {reminders.map((r, idx) => (
+                  <TouchableOpacity
+                    key={`reminder-${r.id}-${idx}`}
+                    style={$gap}
+                    onPress={() => {
+                      setReminder(r.name)
+                      bottomSheetReminderRef.current?.close()
+                    }}
+                  >
+                    <Text text={r.name} size="md" style={{ marginLeft: spacing.md }} />
+                    <View style={$separator} />
+                  </TouchableOpacity>
+                ))}
+              </BottomSheetView>
+            </BottomSheetModal>
           </View>
-          <Button style={$btn} textStyle={{ color: colors.palette.neutral100 }}>
+          <Button
+            style={$btn}
+            textStyle={{ color: colors.palette.neutral100 }}
+            onPress={() => navigation.navigate("Welcome")}
+          >
             Create habit
           </Button>
         </BottomSheetModalProvider>
@@ -229,3 +350,23 @@ const $remindersContainer: ViewStyle = {
   justifyContent: "space-between",
   alignItems: "center",
 }
+
+const $reminder: ViewStyle = {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  backgroundColor: colors.palette.neutral100,
+  padding: spacing.sm,
+  borderRadius: spacing.xs,
+  marginTop: spacing.xs,
+}
+
+const $reminderBottomSheet: ViewStyle = {
+  flex: 1,
+  gap: spacing.lg,
+  padding: spacing.sm,
+  marginTop: spacing.xs,
+  backgroundColor: colors.palette.neutral100,
+}
+
+const $separator: ViewStyle = { width: "100%", height: 2, backgroundColor: colors.background }
