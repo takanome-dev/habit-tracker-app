@@ -3,6 +3,10 @@
     <img src="./assets/images/logo.png" alt="Ignite Logo" />
   </h2>
   <strong>Tiny changes, remarkable results</strong>
+  <br />
+  <div style="margin-top:20px;margin-bottom:20px;">
+    <img src="./assets/images/habit-tracker.gif" width="300px"  />
+  </div>
 </div>
 
 ---
