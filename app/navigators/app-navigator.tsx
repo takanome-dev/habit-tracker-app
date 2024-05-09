@@ -5,14 +5,18 @@
  * and a "main" flow which the user will use once logged in.
  */
 import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { useColorScheme } from "react-native"
+import { useColorScheme, View } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
-import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 import { colors } from "app/theme"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import Ionicons from "@expo/vector-icons/Ionicons"
+import { Text } from "app/components"
+import { HomeStackParamList, TabParamList } from "app/navigators/types"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -27,12 +31,6 @@ import { colors } from "app/theme"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
-export type AppStackParamList = {
-  Welcome: undefined
-  CreateHabit: undefined
-  CreateNewHabit: undefined
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
-}
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -40,24 +38,38 @@ export type AppStackParamList = {
  */
 const exitRoutes = Config.exitRoutes
 
-export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<
-  AppStackParamList,
-  T
->
-
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<AppStackParamList>()
+const Stack = createNativeStackNavigator<HomeStackParamList>()
 
-const AppStack = observer(function AppStack() {
+const HomeStack = observer(function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: colors.background }}>
-      <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+      <Stack.Screen name="Home" component={Screens.HomeScreen} />
       <Stack.Screen name="CreateHabit" component={Screens.CreateHabitScreen} />
       <Stack.Screen name="CreateNewHabit" component={Screens.CreateNewHabitScreen} />
+      <Stack.Screen name="EditHabit" component={Screens.EditHabitScreen} />
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })
+
+function StatisticsScreen() {
+  return (
+    <View style={{}}>
+      <Text text="Stats" />
+    </View>
+  )
+}
+
+function SettingsScreen() {
+  return (
+    <View style={{}}>
+      <Text text="Settings" />
+    </View>
+  )
+}
+
+const Tab = createBottomTabNavigator<TabParamList>()
 
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
@@ -73,7 +85,30 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
-      <AppStack />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName: keyof (typeof Ionicons)["glyphMap"]
+
+            if (route.name === "HomeStack") {
+              iconName = focused ? "home" : "home-outline"
+            } else if (route.name === "Statistics") {
+              iconName = focused ? "stats-chart" : "stats-chart-outline"
+            } else if (route.name === "Settings") {
+              iconName = focused ? "cog" : "cog-outline"
+            }
+
+            // @ts-ignore
+            return <Ionicons name={iconName} size={size} color={color} />
+          },
+          tabBarActiveTintColor: colors.palette.primary600,
+          tabBarInactiveTintColor: colors.palette.neutral600,
+        })}
+      >
+        <Tab.Screen name="HomeStack" component={HomeStack} />
+        <Tab.Screen name="Statistics" component={StatisticsScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   )
 })

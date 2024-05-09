@@ -14,10 +14,10 @@ import DateTimePicker from "@react-native-community/datetimepicker"
 import { Text, Screen, Icon, Button, TextField, Toggle } from "app/components"
 import layout from "app/utils/layout"
 
-import { AppStackScreenProps } from "../navigators"
+import { HomeStackScreenProps } from "../navigators/types"
 import { colors, spacing } from "../theme"
 
-const days = [
+export const days = [
   {
     day: "Sunday",
     abbr: "S",
@@ -48,7 +48,7 @@ const days = [
   },
 ]
 
-const reminders = [
+export const reminders = [
   {
     id: 1,
     name: "At the habit time",
@@ -71,7 +71,7 @@ const reminders = [
   },
 ]
 
-interface CreateNewHabitScreenProps extends AppStackScreenProps<"CreateNewHabit"> {}
+interface CreateNewHabitScreenProps extends HomeStackScreenProps<"CreateNewHabit"> {}
 
 export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
   function CreateNewHabitScreen({ navigation }) {
@@ -81,7 +81,6 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
     const [colorPicked, setColorPicked] = React.useState("#ff0000")
     const [habitTime, setHabitTime] = React.useState(new Date())
     const [frequency, setFrequency] = React.useState<(typeof days)[0][]>([])
-    console.log({ frequency })
 
     const bottomSheetColorRef = React.useRef<BottomSheetModal>(null)
     const bottomSheetReminderRef = React.useRef<BottomSheetModal>(null)
@@ -133,8 +132,9 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
             </TouchableOpacity>
             <BottomSheetModal
               ref={bottomSheetColorRef}
-              snapPoints={[200, "50%"]}
+              snapPoints={[300, "50%"]}
               backdropComponent={renderBackdrop}
+              style={$bottomSheetContainer}
             >
               <BottomSheetView style={$bottomSheet}>
                 <ColorPicker
@@ -252,7 +252,7 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
           <Button
             style={$btn}
             textStyle={{ color: colors.palette.neutral100 }}
-            onPress={() => navigation.navigate("Welcome")}
+            onPress={() => navigation.navigate("Home")}
           >
             Create habit
           </Button>
@@ -370,3 +370,14 @@ const $reminderBottomSheet: ViewStyle = {
 }
 
 const $separator: ViewStyle = { width: "100%", height: 2, backgroundColor: colors.background }
+
+const $bottomSheetContainer: ViewStyle = {
+  shadowColor: colors.text,
+  shadowOffset: {
+    width: 0,
+    height: 12,
+  },
+  shadowOpacity: 0.58,
+  shadowRadius: 16.0,
+  elevation: 24,
+}

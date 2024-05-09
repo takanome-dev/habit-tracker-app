@@ -6,8 +6,8 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 import { Text, Screen, Icon, Button } from "app/components"
 import layout from "app/utils/layout"
 
-import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
+import { HomeStackScreenProps } from "app/navigators/types"
 
 const existingHabits = [
   {
@@ -42,7 +42,7 @@ const existingHabits = [
   },
 ]
 
-interface CreateHabitScreenProps extends AppStackScreenProps<"CreateHabit"> {}
+interface CreateHabitScreenProps extends HomeStackScreenProps<"CreateHabit"> {}
 
 export const CreateHabitScreen: FC<CreateHabitScreenProps> = observer(function CreateHabitScreen({
   navigation,
@@ -82,7 +82,7 @@ export const CreateHabitScreen: FC<CreateHabitScreenProps> = observer(function C
       <Button
         style={$btn}
         textStyle={{ color: colors.palette.neutral100 }}
-        onPress={() => navigation.navigate("Welcome")}
+        onPress={() => navigation.navigate("Home")}
       >
         Done
       </Button>

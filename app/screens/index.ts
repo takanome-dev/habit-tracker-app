@@ -1,4 +1,5 @@
-export * from "./WelcomeScreen"
+export * from "./home"
 export * from "./ErrorScreen/ErrorBoundary"
 export * from "./create-habit"
 export * from "./create-new-habit"
+export * from "./edit-habit"
