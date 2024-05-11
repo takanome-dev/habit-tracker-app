@@ -24,7 +24,8 @@ import {
 import { navigate } from "../navigators"
 import { colors, spacing } from "../theme"
 import { days } from "app/screens/create-new-habit"
-import { HomeStackScreenProps } from "app/navigators/types"
+import { HomeNavProps, HomeStackScreenProps } from "app/navigators/types"
+import { $tabBarStyles } from "app/navigators/styles"
 
 const checkIns = [
   {
@@ -203,7 +204,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
           <Text tx="homeScreen.today" preset="subheading" />
           <View style={$bottomContainer}>
             {tasks.map((task, idx) => (
-              <Habit key={`${task.id}-${idx}`} task={task} />
+              <Habit key={`${task.id}-${idx}`} task={task} navigation={navigation} />
             ))}
           </View>
         </View>
@@ -212,17 +213,30 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
   )
 })
 
-function Habit({ task }: { task: HabitType }) {
+interface HabitProps {
+  task: HabitType
+  navigation: HomeNavProps
+}
+
+function Habit({ task, navigation }: HabitProps) {
   const bottomSheetRef = React.useRef<BottomSheetModal>(null)
+  const [isSheetOpen, setIsSheetOpen] = React.useState(false)
 
   const handleOpenSheet = React.useCallback(() => {
     bottomSheetRef.current?.present()
+    setIsSheetOpen(true)
   }, [])
 
   const renderBackdrop = React.useCallback(
     (props: any) => <BottomSheetBackdrop {...props} disappearsOnIndex={0} appearsOnIndex={1} />,
     [],
   )
+
+  React.useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: isSheetOpen ? { display: "none" } : $tabBarStyles,
+    })
+  }, [isSheetOpen])
 
   return (
     <>
@@ -253,6 +267,7 @@ function Habit({ task }: { task: HabitType }) {
         snapPoints={[500, "70%"]}
         backdropComponent={renderBackdrop}
         style={$bottomSheetContainer}
+        onDismiss={() => setIsSheetOpen(false)}
       >
         <BottomSheetView style={$bottomSheet}>
           <View style={$bottomSheetIcons}>
@@ -313,6 +328,7 @@ function Habit({ task }: { task: HabitType }) {
 const $container: ViewStyle = {
   paddingHorizontal: spacing.lg,
   gap: spacing.xl,
+  paddingBottom: 60,
 }
 
 const $topContainer: ViewStyle = {

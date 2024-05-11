@@ -8,15 +8,16 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { useColorScheme, View } from "react-native"
+import { Platform, useColorScheme, View, ViewStyle } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 import { colors } from "app/theme"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import Ionicons from "@expo/vector-icons/Ionicons"
+import MaterialIcons from "@expo/vector-icons/MaterialIcons"
 import { Text } from "app/components"
 import { HomeStackParamList, TabParamList } from "app/navigators/types"
+import { $tabBarStyles } from "app/navigators/styles"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -44,22 +45,17 @@ const Stack = createNativeStackNavigator<HomeStackParamList>()
 const HomeStack = observer(function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: colors.background }}>
+      {/* @ts-ignore */}
       <Stack.Screen name="Home" component={Screens.HomeScreen} />
+      {/* @ts-ignore */}
       <Stack.Screen name="CreateHabit" component={Screens.CreateHabitScreen} />
+      {/* @ts-ignore */}
       <Stack.Screen name="CreateNewHabit" component={Screens.CreateNewHabitScreen} />
+      {/* @ts-ignore */}
       <Stack.Screen name="EditHabit" component={Screens.EditHabitScreen} />
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })
-
-function StatisticsScreen() {
-  return (
-    <View style={{}}>
-      <Text text="Stats" />
-    </View>
-  )
-}
 
 function SettingsScreen() {
   return (
@@ -87,28 +83,40 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
     >
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName: keyof (typeof Ionicons)["glyphMap"]
+          tabBarIcon: ({ focused, color }) => {
+            let iconName: keyof (typeof MaterialIcons)["glyphMap"]
 
             if (route.name === "HomeStack") {
-              iconName = focused ? "home" : "home-outline"
+              iconName = focused ? "home-filled" : "home"
             } else if (route.name === "Statistics") {
-              iconName = focused ? "stats-chart" : "stats-chart-outline"
+              iconName = focused ? "data-usage" : "data-usage"
             } else if (route.name === "Settings") {
-              iconName = focused ? "cog" : "cog-outline"
+              iconName = focused ? "settings" : "settings"
             }
 
-            // @ts-ignore
-            return <Ionicons name={iconName} size={size} color={color} />
+            return (
+              <View style={$tabBarContainer}>
+                {/* @ts-ignore */}
+                <MaterialIcons name={iconName} size={32} color={color} />
+              </View>
+            )
           },
           tabBarActiveTintColor: colors.palette.primary600,
           tabBarInactiveTintColor: colors.palette.neutral600,
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarHideOnKeyboard: true,
+          tabBarStyle: $tabBarStyles,
         })}
       >
         <Tab.Screen name="HomeStack" component={HomeStack} />
-        <Tab.Screen name="Statistics" component={StatisticsScreen} />
+        <Tab.Screen name="Statistics" component={Screens.StatisticsScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   )
 })
+
+const $tabBarContainer: ViewStyle = {
+  top: Platform.OS === "ios" ? 12 : 0,
+}
