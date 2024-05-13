@@ -10,7 +10,7 @@ import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst"
 
 import { clear } from "app/utils/storage"
-import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
+import { goBack, resetRoot, navigate } from "app/navigators/navigation-utilities"
 
 import { Reactotron } from "./ReactotronClient"
 
