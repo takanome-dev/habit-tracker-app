@@ -2244,9 +2244,9 @@
     semver "^7.5.2"
 
 "@react-native-community/datetimepicker@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-8.0.0.tgz#2d0ee2c122495f556d42563a69ffaa8b63e66db9"
-  integrity sha512-hFiGlG5ovhspLYIZlvRs7sMg2NtKjHaG2CJQbECQH1M31760cR7BjYujS/MCM2d44ihhn4ZKLspAyXVN+Gh08g==
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-8.0.1.tgz#047f27566fb21b5095fa54f558bffd8ab6472b46"
+  integrity sha512-4BO0t3geMNNw9cIIm9p9FNUzwMXexdzD4pAH0AaUAycs3BS71HLrX8jHbrI7nzq/+8O7cLAXn5Gudte+YpTV8Q==
   dependencies:
     invariant "^2.2.4"
 
