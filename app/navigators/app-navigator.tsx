@@ -15,7 +15,6 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 import { colors } from "app/theme"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import MaterialIcons from "@expo/vector-icons/MaterialIcons"
-import { Text } from "app/components"
 import { HomeStackParamList, TabParamList } from "app/navigators/types"
 import { $tabBarStyles } from "app/navigators/styles"
 
@@ -56,14 +55,6 @@ const HomeStack = observer(function HomeStack() {
     </Stack.Navigator>
   )
 })
-
-function SettingsScreen() {
-  return (
-    <View style={{}}>
-      <Text text="Settings" />
-    </View>
-  )
-}
 
 const Tab = createBottomTabNavigator<TabParamList>()
 
@@ -111,7 +102,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       >
         <Tab.Screen name="HomeStack" component={HomeStack} />
         <Tab.Screen name="Statistics" component={Screens.StatisticsScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Settings" component={Screens.SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   )

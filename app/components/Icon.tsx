@@ -86,18 +86,28 @@ export function Icon(props: IconProps) {
 }
 
 export const iconRegistry = {
+  alert: require("../../assets/icons/alert.png"),
+  avatar: require("../../assets/images/user-image.png"),
   back: require("../../assets/icons/back.png"),
   bell: require("../../assets/icons/bell.png"),
+  bellFilled: require("../../assets/icons/bell-filled.png"),
   caretLeft: require("../../assets/icons/caretLeft.png"),
   caretRight: require("../../assets/icons/caretRight.png"),
   check: require("../../assets/icons/check.png"),
+  globe: require("../../assets/icons/globe.png"),
   hidden: require("../../assets/icons/hidden.png"),
   ladybug: require("../../assets/icons/ladybug.png"),
   lock: require("../../assets/icons/lock.png"),
+  lockFilled: require("../../assets/icons/lock-filled.png"),
+  logout: require("../../assets/icons/log-out.png"),
   menu: require("../../assets/icons/menu.png"),
   more: require("../../assets/icons/more.png"),
   pencil: require("../../assets/icons/pencil.png"),
   settings: require("../../assets/icons/settings.png"),
+  star: require("../../assets/icons/star.png"),
+  support: require("../../assets/icons/support.png"),
+  toggle: require("../../assets/icons/toggle.png"),
+  user: require("../../assets/icons/user.png"),
   view: require("../../assets/icons/view.png"),
   x: require("../../assets/icons/x.png"),
 }

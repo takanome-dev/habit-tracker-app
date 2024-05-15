@@ -22,5 +22,6 @@ export type HomeStackScreenProps<T extends keyof HomeStackParamList> = Composite
   StackScreenProps<HomeStackParamList, T>
 >
 export type StatisticsScreenProps = BottomTabScreenProps<TabParamList, "Statistics">
+export type SettingsScreenProps = BottomTabScreenProps<TabParamList, "Settings">
 
 export type HomeNavProps = HomeStackScreenProps<"Home">["navigation"]
