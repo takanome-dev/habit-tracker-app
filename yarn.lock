@@ -7941,10 +7941,10 @@ postcss@~8.4.32:
     picocolors "^1.0.0"
     source-map-js "^1.2.0"
 
-postinstall-prepare@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/postinstall-prepare/-/postinstall-prepare-1.0.1.tgz#dac9b5d91b054389141b13c0192eb68a0aa002b5"
-  integrity sha512-4zxO4DjrV0XfD+ABUFEP0MiQmhKOGBnov5LfLsra/XVOUcQ5gMLLMcV3b8K8wJUfNDv1ozleGblYb06gPbjVUQ==
+postinstall-prepare@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/postinstall-prepare/-/postinstall-prepare-2.0.0.tgz#2a6867c1a13a05502aa115d0495efbbd778769cb"
+  integrity sha512-lLFwEKdnGLAaRAm8OpXP6HwrXRW+b8Hh9vRhVHZKmCdobd+D21YM38BCDsi3zrePLSe8Tt0H/mbYkh7/ySQQMg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
