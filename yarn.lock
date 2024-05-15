@@ -8354,9 +8354,9 @@ reactotron-react-js@^3.3.11:
     stacktrace-js "2.0.1"
 
 reactotron-react-native@^5.0.5:
-  version "5.1.6"
-  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-5.1.6.tgz#5c5d2631d9a23c746144e3e28bea4cc567ebca62"
-  integrity sha512-1J+fRQ54mwBhrmJrz6HhBW8GdyUQ8JWXo1vcW3TA61CowYXLuhte7GPau3zt2FYNsTj/r8dd0Pf0wDuuwrzcGQ==
+  version "5.1.7"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-5.1.7.tgz#eb344d274615f505c0ec716dc622690e2356e7cb"
+  integrity sha512-JA2NpnPJo7tHew9tMzELslmF8JX/5pDftrvrG63diZ1uW0S7UYufS47JVZEGsGozgMttERp0APMBdiTBrPW1iQ==
   dependencies:
     mitt "^3.0.1"
     reactotron-core-client "2.9.3"
