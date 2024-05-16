@@ -5,14 +5,14 @@ import { View, ViewStyle, TouchableOpacity } from "react-native"
 import { Text, Screen, Icon, Toggle, IconTypes } from "app/components"
 import layout from "app/utils/layout"
 
-import { SettingsScreenProps } from "../navigators/types"
+import { SettingsScreenProps, SettingsStackParamList } from "../navigators/types"
 import { colors, spacing } from "../theme"
 
 interface GeneralLinkType {
   title: string
   icon: IconTypes
   id?: number
-  to?: string
+  to?: keyof SettingsStackParamList
 }
 
 const generalLinks: GeneralLinkType[] = [
@@ -20,7 +20,7 @@ const generalLinks: GeneralLinkType[] = [
     title: "Personal Infos",
     icon: "user",
     id: 1,
-    to: "Edit Profile",
+    to: "PersonalInfos",
   },
   {
     title: "Dark Mode",
@@ -52,7 +52,7 @@ const aboutLinks: GeneralLinkType[] = [
     title: "About",
     icon: "alert",
     id: 6,
-    to: "About Us",
+    to: "AboutUs",
   },
   {
     title: "Rate Us",
@@ -68,73 +68,92 @@ const aboutLinks: GeneralLinkType[] = [
   },
 ]
 
-export const SettingsScreen: FC<SettingsScreenProps> = observer(function SettingsScreen({
-  navigation,
-}) {
-  return (
-    <Screen preset="scroll" safeAreaEdges={["top", "bottom"]} contentContainerStyle={$container}>
-      <Text text="Settings" preset="subheading" size="xl" />
-      <View style={$topContainer}>
-        <Icon icon="avatar" />
-        <View style={$userInfosContainer}>
-          <View>
-            <Text text="El Hadji Malick Seck" preset="subheading" />
-            <Text text="elhadjimalick@gmail.com" size="xs" style={{ color: colors.textDim }} />
+export const SettingsScreen: FC<SettingsScreenProps<"Settings">> = observer(
+  function SettingsScreen({ navigation }) {
+    return (
+      <Screen preset="scroll" safeAreaEdges={["top", "bottom"]} contentContainerStyle={$container}>
+        <Text text="Settings" preset="subheading" size="xl" />
+        <View style={$topContainer}>
+          <Icon icon="avatar" />
+          <View style={$userInfosContainer}>
+            <View>
+              <Text text="El Hadji Malick Seck" preset="subheading" />
+              <Text text="elhadjimalick@gmail.com" size="xs" style={{ color: colors.textDim }} />
+            </View>
+            <Icon
+              icon="pencil"
+              size={18}
+              onPress={() => navigation.navigate("EditPersonalInfos")}
+            />
           </View>
-          <TouchableOpacity onPress={() => console.log("edit")}>
-            <Icon icon="pencil" size={18} />
-          </TouchableOpacity>
         </View>
-      </View>
 
-      <View style={$generalContainer}>
-        <Text text="General" preset="formLabel" />
-        <View style={$generalLinksContainer}>
-          {generalLinks.map((l, idx) => (
-            <Link
-              key={`${l.id}-${l.to}`}
-              icon={l.icon}
-              title={l.title}
-              // TODO: type the to prop (path to the page)
-              handleClick={() => navigation.navigate(l.to as any)}
-              length={generalLinks.length}
-              index={idx}
-            />
-          ))}
+        <View style={$generalContainer}>
+          <Text text="General" preset="formLabel" />
+          <View style={$generalLinksContainer}>
+            {generalLinks.map((l, idx) => (
+              <Link
+                key={`${l.id}-${l.to}`}
+                icon={l.icon}
+                title={l.title}
+                // TODO: type the to prop (path to the page)
+                handleClick={() => navigation.navigate(l.to as any)}
+                length={generalLinks.length}
+                index={idx}
+              />
+            ))}
+          </View>
         </View>
-      </View>
 
-      <View style={$generalContainer}>
-        <Text text="About Us" preset="formLabel" />
-        <View style={$generalLinksContainer}>
-          {aboutLinks.map((l, idx) => (
-            <Link
-              key={`${l.id}-${l.to}`}
-              icon={l.icon}
-              title={l.title}
-              // TODO: type the to prop (path to the page)
-              handleClick={() => navigation.navigate(l.to as any)}
-              length={aboutLinks.length}
-              index={idx}
-            />
-          ))}
+        <View style={$generalContainer}>
+          <Text text="About Us" preset="formLabel" />
+          <View style={$generalLinksContainer}>
+            {aboutLinks.map((l, idx) => (
+              <Link
+                key={`${l.id}-${l.to}`}
+                icon={l.icon}
+                title={l.title}
+                // TODO: type the to prop (path to the page)
+                handleClick={() => navigation.navigate(l.to as any)}
+                length={aboutLinks.length}
+                index={idx}
+              />
+            ))}
+          </View>
         </View>
-      </View>
-    </Screen>
-  )
-})
+
+        <View
+          style={{
+            backgroundColor: colors.palette.neutral100,
+            paddingHorizontal: spacing.md,
+            paddingVertical: spacing.xs,
+            borderRadius: spacing.xs,
+          }}
+        >
+          <Link
+            icon="logout"
+            title="Logout"
+            handleClick={() => console.log("logout")}
+            length={1}
+            index={0}
+          />
+        </View>
+      </Screen>
+    )
+  },
+)
 
 interface LinkProps extends GeneralLinkType {
-  length: number
-  index: number
+  length?: number
+  index?: number
   handleClick: () => void
 }
 
-function Link(props: LinkProps) {
+export function Link(props: LinkProps) {
   const { icon, title, length, index, handleClick } = props
 
   return (
-    <View style={{ gap: spacing.md }}>
+    <View style={{ gap: spacing.xs }}>
       <TouchableOpacity style={$generalLink} onPress={handleClick}>
         <View style={$generalName}>
           <Icon icon={icon} />
@@ -156,7 +175,7 @@ function Link(props: LinkProps) {
           <Icon icon="caretRight" />
         )}
       </TouchableOpacity>
-      {length !== index + 1 && <View style={$separator} />}
+      {length !== (index ?? 0) + 1 && <View style={$separator} />}
     </View>
   )
 }
@@ -164,7 +183,6 @@ function Link(props: LinkProps) {
 const $container: ViewStyle = {
   paddingHorizontal: spacing.md,
   gap: spacing.xl,
-  flex: 1,
   paddingBottom: 70,
 }
 
@@ -193,14 +211,17 @@ const $generalContainer: ViewStyle = {
 
 const $generalLinksContainer: ViewStyle = {
   backgroundColor: colors.palette.neutral100,
-  padding: spacing.md,
   borderRadius: spacing.xs,
-  gap: spacing.lg,
+  padding: spacing.md,
+  gap: spacing.xs,
 }
 
 const $generalLink: ViewStyle = {
   flexDirection: "row",
   justifyContent: "space-between",
+  // borderWidth: 1,
+  // borderColor: "red",
+  paddingVertical: spacing.xs,
 }
 
 const $generalName: ViewStyle = {

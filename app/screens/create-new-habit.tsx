@@ -265,7 +265,7 @@ export const CreateNewHabitScreen: FC<CreateNewHabitScreenProps> = observer(
 const $container: ViewStyle = {
   paddingHorizontal: spacing.md,
   gap: spacing.xl,
-  flex: 1,
+  paddingBottom: 70,
 }
 
 const $headerContainer: ViewStyle = {

@@ -11,10 +11,23 @@ export type HomeStackParamList = {
   }
 }
 
+export type SettingsStackParamList = {
+  Settings: undefined
+  PersonalInfos: undefined
+  Notifications: undefined
+  Security: undefined
+  EditPassword: undefined
+  Language: undefined
+  AboutUs: undefined
+  Rating: undefined
+  Support: undefined
+  EditPersonalInfos: undefined
+}
+
 export type TabParamList = {
   HomeStack: NavigatorScreenParams<HomeStackParamList>
   Statistics: undefined
-  Settings: undefined
+  SettingsStack: NavigatorScreenParams<SettingsStackParamList>
 }
 
 export type HomeStackScreenProps<T extends keyof HomeStackParamList> = CompositeScreenProps<
@@ -22,6 +35,9 @@ export type HomeStackScreenProps<T extends keyof HomeStackParamList> = Composite
   StackScreenProps<HomeStackParamList, T>
 >
 export type StatisticsScreenProps = BottomTabScreenProps<TabParamList, "Statistics">
-export type SettingsScreenProps = BottomTabScreenProps<TabParamList, "Settings">
 
+export type SettingsScreenProps<T extends keyof SettingsStackParamList> = CompositeScreenProps<
+  BottomTabScreenProps<TabParamList, "SettingsStack">,
+  StackScreenProps<SettingsStackParamList, T>
+>
 export type HomeNavProps = HomeStackScreenProps<"Home">["navigation"]

@@ -15,8 +15,11 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 import { colors } from "app/theme"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import MaterialIcons from "@expo/vector-icons/MaterialIcons"
-import { HomeStackParamList, TabParamList } from "app/navigators/types"
+import { HomeStackParamList, SettingsStackParamList, TabParamList } from "app/navigators/types"
 import { $tabBarStyles } from "app/navigators/styles"
+import { PersonalInfosScreen } from "app/screens/profile/personal-infos"
+import { EditPersonalInfosScreen } from "app/screens/profile/edit-personal-infos"
+import { EditPasswordScreen } from "app/screens/profile/edit-password"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -44,15 +47,35 @@ const Stack = createNativeStackNavigator<HomeStackParamList>()
 const HomeStack = observer(function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: colors.background }}>
-      {/* @ts-ignore */}
+      {/* @ts-expect-error type props error */}
       <Stack.Screen name="Home" component={Screens.HomeScreen} />
-      {/* @ts-ignore */}
+      {/* @ts-expect-error type props error */}
       <Stack.Screen name="CreateHabit" component={Screens.CreateHabitScreen} />
-      {/* @ts-ignore */}
+      {/* @ts-expect-error type props error */}
       <Stack.Screen name="CreateNewHabit" component={Screens.CreateNewHabitScreen} />
-      {/* @ts-ignore */}
+      {/* @ts-expect-error type props error */}
       <Stack.Screen name="EditHabit" component={Screens.EditHabitScreen} />
     </Stack.Navigator>
+  )
+})
+
+const SettingStack = createNativeStackNavigator<SettingsStackParamList>()
+
+const SettingsStack = observer(function SettingsStack() {
+  return (
+    <SettingStack.Navigator
+      initialRouteName="Settings"
+      screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
+    >
+      {/* @ts-expect-error type props error */}
+      <SettingStack.Screen name="Settings" component={Screens.SettingsScreen} />
+      {/* @ts-expect-error type props error */}
+      <SettingStack.Screen name="PersonalInfos" component={PersonalInfosScreen} />
+      {/* @ts-expect-error type props error */}
+      <SettingStack.Screen name="EditPersonalInfos" component={EditPersonalInfosScreen} />
+      {/* @ts-expect-error type props error */}
+      <SettingStack.Screen name="EditPassword" component={EditPasswordScreen} />
+    </SettingStack.Navigator>
   )
 })
 
@@ -81,7 +104,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
               iconName = focused ? "home-filled" : "home"
             } else if (route.name === "Statistics") {
               iconName = focused ? "data-usage" : "data-usage"
-            } else if (route.name === "Settings") {
+            } else if (route.name === "SettingsStack") {
               iconName = focused ? "settings" : "settings"
             }
 
@@ -102,7 +125,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       >
         <Tab.Screen name="HomeStack" component={HomeStack} />
         <Tab.Screen name="Statistics" component={Screens.StatisticsScreen} />
-        <Tab.Screen name="Settings" component={Screens.SettingsScreen} />
+        <Tab.Screen name="SettingsStack" component={SettingsStack} />
       </Tab.Navigator>
     </NavigationContainer>
   )
