@@ -8149,10 +8149,22 @@ reactotron-core-client@2.9.3, reactotron-core-client@^2.8.13:
   dependencies:
     reactotron-core-contract "0.2.3"
 
+reactotron-core-client@2.9.4:
+  version "2.9.4"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.9.4.tgz#eabc520ca8b270ee264e20172279f921778b0a4b"
+  integrity sha512-0MVo8R2YVC0t6uEkFJbdelC0lOzJun/+qIOlEpIYh08VKiNVR7GYXevhZvJfSmMAUSVFoGVpeQyTbeW3brgSDQ==
+  dependencies:
+    reactotron-core-contract "0.2.4"
+
 reactotron-core-contract@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/reactotron-core-contract/-/reactotron-core-contract-0.2.3.tgz#4b72bbe2905fda2a7e69f2653fc32bbdaaebb052"
   integrity sha512-GMeulATwiTsAqRnTKLWgM4gG3pUxAuspW412SWutHIW0fZNEOiHg8bWTEQURhm1WZj+u4tmdbkPiIWBfH8fvvQ==
+
+reactotron-core-contract@0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/reactotron-core-contract/-/reactotron-core-contract-0.2.4.tgz#c7038ce6bac5b8674b462895d7fe5e30661b24e8"
+  integrity sha512-CmNYahBdk9uES4vimlRsoM1gAQA6T5gXTuJzDvduOjKd0IZufZjkxzBAvhpkX5OIkPl4Xlsv+1AHXLWSJSwFLA==
 
 reactotron-mst@^3.1.7:
   version "3.1.9"
@@ -8170,12 +8182,12 @@ reactotron-react-js@^3.3.11:
     stacktrace-js "2.0.1"
 
 reactotron-react-native@^5.0.5:
-  version "5.1.6"
-  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-5.1.6.tgz#5c5d2631d9a23c746144e3e28bea4cc567ebca62"
-  integrity sha512-1J+fRQ54mwBhrmJrz6HhBW8GdyUQ8JWXo1vcW3TA61CowYXLuhte7GPau3zt2FYNsTj/r8dd0Pf0wDuuwrzcGQ==
+  version "5.1.9"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-5.1.9.tgz#1d9d557817e9f10f9c33c1339c54b46690f6ed97"
+  integrity sha512-tHkC5ZADXBJ9vRcs8TFEWOcK1QzHEzI3UnorwDDSU3hnWpwVt5MtxBcgQkicLIRWcPROe4lIJMf6SG9uc+opuA==
   dependencies:
     mitt "^3.0.1"
-    reactotron-core-client "2.9.3"
+    reactotron-core-client "2.9.4"
   optionalDependencies:
     react-native-flipper "^0.164.0"
 
