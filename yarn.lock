@@ -4902,9 +4902,9 @@ eslint-plugin-react@7.34.1:
     string.prototype.matchall "^4.0.10"
 
 eslint-plugin-reactotron@^0.1.2:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-reactotron/-/eslint-plugin-reactotron-0.1.4.tgz#a22134a823c5fd9f97659e426e4eaca2da909212"
-  integrity sha512-UjMjLQFIaqGqrArA7tBMeCzutdJ1Lp9vtH8tkU5ThDxh3HI2mwI8vJ9efjYm8Zru/m2ec1Swr+NayPTAJ9IZvA==
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-reactotron/-/eslint-plugin-reactotron-0.1.7.tgz#793b5020c735a70f22dda518052234809706e06c"
+  integrity sha512-SdzVliE/SZ6J/Q1CZ701PBdOm0sinJwPQVYlTY/g4mOIfKaaeQCg8LQiuMKg1QNUTLz5IcrQ18svXTUlSwkbSg==
 
 eslint-scope@^5.1.1:
   version "5.1.1"
